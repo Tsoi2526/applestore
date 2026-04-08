@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>確認訂單</h2>
+<div class="row">
+    <div class="col-md-8">
+        <h4>商品列表</h4>
+        <table class="table">
+            <thead>
+                <tr><th>商品</th><th>單價</th><th>數量</th><th>小計</th></tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>HK${{ "%.2f"|format(item.product.price) }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>HK${{ "%.2f"|format(item.subtotal) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h4>總計：HK${{ "%.2f"|format(total) }}</h4>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">送貨資訊</h5>
+                <form method="POST" action="{{ url_for('main.place_order') }}">
+                    <div class="mb-3">
+                        <label class="form-label">收件人姓名</label>
+                        <input type="text" class="form-control" name="receiver_name" value="{{ current_user.username }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">地址</label>
+                        <input type="text" class="form-control" name="address" placeholder="香港..." required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">電話</label>
+                        <input type="tel" class="form-control" name="phone" required>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">提交訂單</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
