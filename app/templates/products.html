@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>所有產品</h2>
+<div class="row">
+    {% for product in products %}
+    <div class="col-md-3 mb-4">
+        <div class="card h-100">
+            <img src="{{ product.image_url or 'https://via.placeholder.com/200x150' }}" class="card-img-top" alt="{{ product.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">HK${{ product.price }}</p>
+                <a href="{{ url_for('main.product_detail', id=product.id) }}" class="btn btn-sm btn-primary">購買</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

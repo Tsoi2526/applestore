@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Hero 区域：模仿官网大标题和按钮 -->
+<div class="hero">
+    <div class="container container-custom">
+        <h1>iPhone</h1>
+        <p>細看最新 iPhone 陣容</p>
+        <div>
+            <a href="{{ url_for('main.products') }}" class="btn-apple me-3" style="text-decoration: none;">進一步了解</a>
+            <a href="{{ url_for('main.products') }}" class="btn-outline-apple" style="text-decoration: none;">選購 iPhone</a>
+        </div>
+    </div>
+</div>
+
+<!-- 第二个区块：Mac 示例 -->
+<div class="hero" style="background-color: #f5f5f7; margin-top: 1rem;">
+    <div class="container container-custom">
+        <h2>MacBook Air</h2>
+        <p>精彩滿 Mac，好價喜出望外。</p>
+        <div>
+            <a href="{{ url_for('main.products') }}" class="btn-apple me-3" style="text-decoration: none;">進一步了解</a>
+            <a href="{{ url_for('main.products') }}" class="btn-outline-apple" style="text-decoration: none;">購買</a>
+        </div>
+    </div>
+</div>
+
+<!-- 精选产品网格 -->
+<div class="container container-custom mt-5">
+    <h2 class="mb-4" style="font-weight: 600;">精選產品</h2>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4 col-sm-6">
+            <div class="card product-card">
+                <img src="{{ product.image_url or 'https://placehold.co/400x400?text=Apple+Product' }}" class="card-img-top" alt="{{ product.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.description[:60] }}...</p>
+                    <p class="price">HK${{ "%.2f"|format(product.price) }}</p>
+                    <a href="{{ url_for('main.product_detail', id=product.id) }}" class="btn-outline-apple" style="display: inline-block;">查看詳情</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

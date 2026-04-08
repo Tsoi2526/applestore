@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>我的訂單</h2>
+{% if orders %}
+    <table class="table">
+        <thead>
+            <tr><th>訂單編號</th><th>日期</th><th>總金額</th><th>狀態</th><th></th></tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.order_number }}</td>
+                <td>{{ order.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td>HK${{ "%.2f"|format(order.total_amount) }}</td>
+                <td>{{ order.status }}</td>
+                <td><a href="{{ url_for('main.order_detail', order_id=order.id) }}" class="btn btn-sm btn-primary">查看</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>暫無訂單。</p>
+{% endif %}
+{% endblock %}
